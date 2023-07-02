@@ -235,8 +235,8 @@ client.on('interactionCreate', async (interaction) => {
       if (String(objectName).match(/(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'<> #]+)/)) {
         const session = new EventEmitter()
         if (String(objectName).includes('list')) {
-          const check = await ytpl(url).catch(err => {})
-          if(!checl || typeof check == 'undefined') return interaction.reply('Playlist not found')
+          const check = await ytpl(url).catch(err => { })
+          if (!checl || typeof check == 'undefined') return interaction.reply('Playlist not found')
           const url = createDownloadPlaylist(objectName, session);
           const id = url.replace('https://', '').split('/');
           interaction.reply({
@@ -272,8 +272,8 @@ client.on('interactionCreate', async (interaction) => {
 
 
         } else {
-          const info = await ytdl.getInfo(objectName).catch(err => {})
-          if(!info || typeof info == 'undefined') return interaction.reply('Video not found')
+          const info = await ytdl.getInfo(objectName).catch(err => { })
+          if (!info || typeof info == 'undefined') return interaction.reply('Video not found')
           if (info.videoDetails.isLiveContent) return interaction.reply("I can't process the live stream video")
           const url = createDownload(objectName, session);
           const id = url.replace('https://', '').split('/');
