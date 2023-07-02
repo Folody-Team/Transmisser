@@ -2,9 +2,11 @@
   "name": "nodejs",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
+    "dev": "ts-node .",
+    "build": "tsc",
+    "run": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +15,7 @@
   "dependencies": {
     "@types/node": "^18.0.6",
     "archiver": "^5.3.1",
+    "body-parser": "^1.20.2",
     "discord-interactions": "^3.4.0",
     "discord.js": "^14.11.0",
     "dotenv": "^16.3.1",
@@ -20,7 +23,15 @@
     "ffmpeg-static": "^5.1.0",
     "fluent-ffmpeg": "^2.1.2",
     "node-fetch": "^3.2.6",
+    "random-useragent": "^0.5.0",
+    "tweetnacl": "^1.0.3",
     "ytdl-core": "^4.11.4",
     "ytpl": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/archiver": "^5.3.2",
+    "@types/express": "^4.17.17",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
   }
 }
