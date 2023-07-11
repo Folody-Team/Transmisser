@@ -1,42 +1,16 @@
-import {Youtube as YoutubeCore} from './YoutubeCore'
-import {Express} from 'express'
-import {Result} from 'ytpl';
+import { Youtube as YoutubeCore } from './YoutubeCore'
+import { Express } from 'express'
+import { Result } from 'ytpl';
 import crypto from 'node:crypto';
-import archiver, {Archiver} from 'archiver';
+import archiver, { Archiver } from 'archiver';
 
 export class Youtube extends YoutubeCore {
   private YOUTUBE = /(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'<> #]+)/;
   private r!: number;
   private l!: number;
-  
+
   constructor(app: Express) {
     super(app);
-  }
-
-  /**
-   * 
-   * @param url 
-   */
-  private getVideo(url: string) {
-    return Object.assign(this, { 
-      video: this.ytdl(url, {
-        filter: 'videoonly',
-        quality: 'highestvideo'
-      }) 
-    })  
-  }
-
-   /**
-   * 
-   * @param url 
-   */
-  private getAudio(url: string) {
-    return Object.assign(this, { 
-      audio: this.ytdl(url, {
-        filter: 'audioonly',
-        quality: 'highestaudio'
-      }) 
-    })
   }
 
   /**
@@ -77,22 +51,22 @@ export class Youtube extends YoutubeCore {
       }
     }
 
-    if(url.match(this.YOUTUBE)) { 
-      if(url.includes('list')) {
-        const playlist = await this.ytpl(url).catch(err => {});
+    if (url.match(this.YOUTUBE)) {
+      if (url.includes('list')) {
+        const playlist = await this.ytpl(url).catch(err => { });
         if (!playlist || typeof playlist == 'undefined') return {
           code: 1001,
           zipFile: null,
           video: null
         }
-        const zipFile = archiver('zip', {zlib: {level: 9}});
-        
+        const zipFile = archiver('zip', { zlib: { level: 9 } });
+
         this.l = 0;
         this.r = playlist.items.length;
 
-        while(this.l <= this.r) {
-          
-          if(this.l === this.r) {
+        while (this.l <= this.r) {
+
+          if (this.l === this.r) {
             solvePlaylist(this.l, playlist, zipFile)
           } else {
             solvePlaylist(this.l, playlist, zipFile)
@@ -103,20 +77,20 @@ export class Youtube extends YoutubeCore {
           ++this.l;
           --this.r;
         }
-        
+
         return {
           code: 1002,
           zipFile: zipFile,
           video: null
         }
-        
+
       } else {
         return {
           code: 1002,
           zipFile: null,
           video: null
         }
-        
+
       }
     } else {
       return {
@@ -125,13 +99,39 @@ export class Youtube extends YoutubeCore {
         video: null
       }
     }
-   
+
 
     // create filename with randomByte
     const filename = crypto.randomBytes(20).toString('hex')
 
-    
 
 
+
+  }
+
+  /**
+   * 
+   * @param url 
+   */
+  private getVideo(url: string) {
+    return Object.assign(this, {
+      video: this.ytdl(url, {
+        filter: 'videoonly',
+        quality: 'highestvideo'
+      })
+    })
+  }
+
+  /**
+  * 
+  * @param url 
+  */
+  private getAudio(url: string) {
+    return Object.assign(this, {
+      audio: this.ytdl(url, {
+        filter: 'audioonly',
+        quality: 'highestaudio'
+      })
+    })
   }
 }
