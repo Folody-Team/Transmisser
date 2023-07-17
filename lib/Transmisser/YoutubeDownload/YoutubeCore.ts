@@ -1,18 +1,18 @@
-import {Express} from 'express'
-import {FFMPEG} from './ffmpeg';
+import { Express } from 'express'
+import { FFMPEG } from './ffmpeg';
 import ytdl from 'ytdl-core';
 import ytpl from 'ytpl';
-import {EventEmitter} from 'events';
-import {eventsType} from './constants/events';
+import { EventEmitter } from 'events';
+import { eventsType } from './constants/events';
 
 export declare interface Youtube extends EventEmitter {
   on<U extends keyof eventsType>(event: U, listener: eventsType[U]): this;
 
-	emit<U extends keyof eventsType>(
-		event: U,
-		...args: Parameters<eventsType[U]>
-	): boolean;
-} 
+  emit<U extends keyof eventsType>(
+    event: U,
+    ...args: Parameters<eventsType[U]>
+  ): boolean;
+}
 
 
 export class Youtube extends EventEmitter {
@@ -31,6 +31,32 @@ export class Youtube extends EventEmitter {
     Object.assign(this, { ffmpeg: new FFMPEG() });
     Object.assign(this, { ytdl: ytdl });
     Object.assign(this, { ytpl: ytpl });
+  }
+
+  /**
+  * 
+  * @param url 
+  */
+  public getVideo(url: string) {
+    return Object.assign(this, {
+      video: this.ytdl(url, {
+        filter: 'videoonly',
+        quality: 'highestvideo'
+      })
+    })
+  }
+
+  /**
+  * 
+  * @param url 
+  */
+  public getAudio(url: string) {
+    return Object.assign(this, {
+      audio: this.ytdl(url, {
+        filter: 'audioonly',
+        quality: 'highestaudio'
+      })
+    })
   }
 
 }

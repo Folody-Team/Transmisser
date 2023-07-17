@@ -4,7 +4,7 @@ import cp from 'child_process';
 export class FFMPEG {
   private ffmpeg = ffmpegCore;
   private data = {}
-  private stdio = ['pipe', 'pipe', 'pipe', 'pipe', 'pipe',]
+  private stdio = ['pipe', 'pipe', 'pipe', 'pipe', 'pipe']
 
   constructor() {
     Object.assign(this.data, {'-c:v': `copy`});
@@ -27,8 +27,10 @@ export class FFMPEG {
     Object.entries(this.data).map(([key, value]) => {
       return data.push(key, value as string);
     })
-   
-    return cp.spawn(this.ffmpeg as string, data, {stdio: this.stdio as cp.StdioPipe[]});
+    data.push('-')
+
+    const process = cp.spawn(this.ffmpeg as string, data, {stdio: this.stdio as cp.StdioPipe[]});
+    return process;
 
 
   }
