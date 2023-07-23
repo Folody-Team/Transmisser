@@ -1,5 +1,6 @@
 /node_modules
 /dist
 /app/build
+/.vscode
 
 package-lock.json
