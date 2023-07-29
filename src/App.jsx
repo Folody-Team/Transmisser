@@ -4,7 +4,4 @@ const App = () => (
   </div>
 );
 
-const rootElement = document.getElementById("main");
-rootElement.appendChild(<App />);
-
 export default App;
