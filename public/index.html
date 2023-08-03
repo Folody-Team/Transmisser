@@ -9,16 +9,31 @@
       * {
         box-sizing: border-box;
         font-family: 'Manrope', sans-serif;
+        transition: 0.2s ease-in-out;
       }
       body {
         margin: 0;
         background-color: #020320;
+        min-height: 100vh;
+      }
+
+      input {
+        border: none;
+      }
+      .input:focus-within  {
+        border: #1926d6 solid 2px;
+        box-shadow: 0px 0px 50px #1e2dff80;
       }
       .titleBtn {
         background: #020320;
       }
       .titleBtn:hover {
         background-color: #191b4d;
+      }
+
+
+      .addBtn:hover {
+        background: rgb(42, 43, 69, 0.8);
       }
       #titlebar {
         background: #010220;

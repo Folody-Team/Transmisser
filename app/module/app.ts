@@ -17,7 +17,7 @@ export class Electron {
          */
         this.createWindow = (webPreferences: any) => {
             const computerScale = screen.getPrimaryDisplay().size;
-            const main = this.window(computerScale.width/1.5, computerScale.height/1.5, {
+            const main = this.window(computerScale.width/1.7, computerScale.height/1.5, {
                 ...webPreferences,
             });
             
@@ -55,14 +55,6 @@ export class Electron {
             browser.minimize();
         });
     
-        ipcMain.on('max', (event) => {
-            if (browser.isMaximized()) {
-                browser.restore();
-            } else {
-                browser.maximize();
-            }
-        });
-    
         ipcMain.on('close', (event) => {
             browser.close();
         });
@@ -82,6 +74,8 @@ export class Electron {
             height: height,
             frame: frame,
             titleBarStyle: 'hidden',
+            resizable: false,
+            maximizable: false,
             webPreferences: {
                 sandbox: false,
                 ...webPreferences,

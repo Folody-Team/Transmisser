@@ -9,7 +9,7 @@
     "dev": "npm run build-babel && npm start",
     "build-babel": "babel src -d dist",
     "build-webpack": "webpack --config webpack.config.js",
-    "build": "npm run build-webpack && javascript-obfuscator ./app/build --output ./app/build --options-preset high-obfuscation",
+    "build": "npm run build-webpack",
     "product-dev": "ts-node ./app/main.ts",
     "electron-build": "tsc --build",
     "electron": "npm run electron-build && electron app/main.js",
@@ -46,10 +46,14 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.3",
     "custom-electron-titlebar": "^4.2.5",
     "electron": "^25.3.1",
     "express": "^4.18.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.10.1"
   }
 }
