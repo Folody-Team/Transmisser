@@ -3,4 +3,6 @@
 /app/build
 /.vscode
 
+/app/*.js
+/app/**/*.js
 package-lock.json

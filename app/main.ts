@@ -1,17 +1,7 @@
-import express from 'express';
+import {fork} from 'child_process';
+import {Electron} from './module/app'
 import path from 'path';
 
-const app = express()
+const app = new Electron(() => fork(path.join(__dirname, './server.js')));
 
-const port = process.env.PORT || 3000;
-
-app.use(express.static(path.join(__dirname, './build')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './build', 'app.html'));
-});
-
-
-app.listen(port, () => {
-  console.log(`App is running on port ${port}`);
-});
+app.init({ preload: path.join(__dirname, './preload.js') });
