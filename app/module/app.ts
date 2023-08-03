@@ -1,24 +1,36 @@
 
-import {app, BrowserWindow, screen} from 'electron';
-import {setupTitlebar, attachTitlebarToWindow} from "custom-electron-titlebar/main";
+import {app, BrowserWindow, screen, Menu, ipcMain} from 'electron';
 
 export class Electron {
     public createWindow: Function;
     public init: Function;
 
+    /**
+     * 
+     * @param callback 
+     */
     constructor(callback: any) {
-        setupTitlebar();
         callback();
 
+        /**
+         * @param webPreferences
+         */
         this.createWindow = (webPreferences: any) => {
             const computerScale = screen.getPrimaryDisplay().size;
-            const main = this.window(computerScale.width*0.5, computerScale.height*0.5, {
+            const main = this.window(computerScale.width/1.5, computerScale.height/1.5, {
                 ...webPreferences,
             });
+            
+            Menu.setApplicationMenu(null);
 
-            attachTitlebarToWindow(main);
+            main.webContents.openDevTools()
+            main.loadURL('http://localhost:3000/');
+            this.setTitleBar(main);
         }
 
+        /**
+         * @param webPreferences
+         */
         this.init = (webPreferences: any) => {
             app.whenReady().then(() => {
                 this.createWindow(webPreferences);
@@ -32,6 +44,28 @@ export class Electron {
                 if (process.platform !== 'darwin') app.quit()
             })
         }
+    }
+
+    /**
+     * 
+     * @param browser 
+     */
+    private setTitleBar(browser: BrowserWindow) {
+        ipcMain.on('minimize', (event) => {
+            browser.minimize();
+        });
+    
+        ipcMain.on('max', (event) => {
+            if (browser.isMaximized()) {
+                browser.restore();
+            } else {
+                browser.maximize();
+            }
+        });
+    
+        ipcMain.on('close', (event) => {
+            browser.close();
+        });
     }
 
     /**

@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const crypto = require('crypto');
+const path = require('path')
 
 const id = crypto.randomBytes(20)
 
@@ -9,13 +10,13 @@ module.exports = {
   mode: 'development',
   output: {
     path: path.resolve(__dirname, './app/build'),
-    filename: `transimisser_${id}.js`,
+    filename: `transmisser_${crypto.randomBytes(10).toString('hex')}.js`,
   },
   target: 'web',
   devServer: {
     port: '5000',
     static: {
-      directory: path.join(__dirname, 'html')
+      directory: path.join(__dirname, 'public')
 },
     open: true,
     hot: true,
@@ -35,7 +36,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'html', 'app.html')
+      template: path.join(__dirname, 'public', 'index.html')
     }),
     new CleanWebpackPlugin()
   ]

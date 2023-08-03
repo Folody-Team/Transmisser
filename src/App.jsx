@@ -1,7 +1,11 @@
-const App = () => (
-  <div>
-    <span>Transmisser</span>
-  </div>
-);
+import React from "react";
 
-export default App;
+const App = () =>{
+    return (
+        <h1>
+            Hello world! I am using React
+        </h1>
+    )
+}
+
+export default App
