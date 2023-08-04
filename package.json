@@ -12,7 +12,7 @@
     "build": "npm run build-webpack",
     "product-dev": "ts-node ./app/main.ts",
     "electron-build": "tsc --build",
-    "electron": "npm run electron-build && electron app/main.js",
+    "electron": "npm run electron-build && electron app/build/main.js",
     "server": "node ./app/server.js"
   },
   "keywords": [],

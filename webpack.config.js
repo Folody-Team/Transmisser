@@ -9,12 +9,12 @@ module.exports = {
   entry: './index.js',
   mode: 'development',
   output: {
-    path: path.resolve(__dirname, './app/build'),
+    path: path.resolve(__dirname, './app/build/packs'),
     filename: `transmisser_${crypto.randomBytes(10).toString('hex')}.js`,
   },
   target: 'web',
   devServer: {
-    port: '5000',
+    port: '3000',
     static: {
       directory: path.join(__dirname, 'public')
 },
