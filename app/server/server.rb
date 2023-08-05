@@ -1,21 +1,20 @@
 require 'sinatra'
 require 'fileutils'
+require_relative 'config'
 
-
-exit if Object.const_defined?(:Ocra)
-
-
-
-class App < Sinatra::Base
+class App < Sinatra::Application
   @env = 'dev'
   set :port, ENV['PORT'] || 3000
 
   if @env == 'dev'
-    set :static, File.join('..', 'build', 'packs')
+    set :static, ServerConfig::Path['devPath']
   else
-    set :static, File.join(__dir__, 'packs')
-  end
+    set :static, ServerConfig::Path['productPath']
+  end  
+  run!
+end
 
+class Routes < App
   get '/' do
     file = File.join(settings.static, 'index.html')
     File.read(file)
@@ -24,6 +23,8 @@ class App < Sinatra::Base
   get '/*.js' do
     send_file File.join(settings.static, "#{params[:splat].first}.js")
   end
-
-  run!
+  
+  get '/*.png' do
+    send_file File.join(settings.static, "#{params[:splat].first}.png")
+  end
 end

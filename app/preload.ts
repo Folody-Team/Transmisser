@@ -8,8 +8,8 @@ const icon = {
 }
 
 
-
 window.addEventListener('DOMContentLoaded', () => {
+
   init('titlebar', [
     {
       tag: 'div',
@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
         },
         {
           name: 'style',
-          value: 'padding: 10px; color: #DCDCDC; font-weight: 600;'
+          value: 'padding: 10px; color: #DCDCDC; font-weight: 600; z-index: 100'
         }
       ],
       child: []
@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', () => {
       atr: [
         {
           name: 'style',
-          value: 'display: flex; align-items: center; -webkit-app-region: no-drag;'
+          value: 'display: flex; align-items: center; -webkit-app-region: no-drag; ; z-index: 100'
         }
       ],
       child: [
@@ -76,7 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
             {
               name: 'onClick',
               value: () => {
-                
+
                 ipcRenderer.send('close');
               }
             }
@@ -86,4 +86,7 @@ window.addEventListener('DOMContentLoaded', () => {
       ]
     }
   ])
+
+  
+
 });

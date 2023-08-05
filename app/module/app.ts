@@ -23,6 +23,20 @@ export class Electron {
             
             Menu.setApplicationMenu(null);
 
+            main.webContents.on('did-finish-load', ()=>{
+                let code = `const card = document.getElementById('input')
+                if (card) {
+                  card.onmousemove = e => {
+                    const rect = card.getBoundingClientRect(),
+                      x = e.clientX - rect.left,
+                      y = e.clientY - rect.top;
+              
+                    card.style.setProperty("--mouse-x", \`\${x}px\`);
+                    card.style.setProperty("--mouse-y", \`\${y}px\`);
+                  }
+                }`;
+                main.webContents.executeJavaScript(code);
+            });
             main.webContents.openDevTools()
             main.loadURL('http://localhost:3000/');
             this.setTitleBar(main);

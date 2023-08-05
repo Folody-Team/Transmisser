@@ -5,14 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack serve --open",
-    "dev": "npm run build-babel && npm start",
+    "start": "webpack serve",
     "build-babel": "babel src -d dist",
     "build-webpack": "webpack --config webpack.config.js",
     "build": "npm run build-webpack",
     "product-dev": "ts-node ./app/main.ts",
     "electron-build": "tsc --build",
-    "electron": "npm run electron-build && electron app/build/main.js",
+    "electron": "set NODE_ENV=development && npm run electron-build && electron app/build/main.js",
     "server": "node ./app/server.js"
   },
   "keywords": [],
